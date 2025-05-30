@@ -329,7 +329,54 @@ def pacientes_urgentes(c:Cola[(int,str,str)]) -> int:
 #ejercicio 15
      
       
-        
+#DICCIONARIOS
+#EJERCICIO 16
+def calcular_promedio_por_estudiante(notas:tuple[tuple[str,int]]) -> dict[str,float]:
+   promedio_diccionarios:dict = {}
+   suma_notas = {}
+   conteo_notas = {}
+   for nombre , nota in notas :
+      if nombre!="" and nota in range(11):
+       if nombre in suma_notas:
+            suma_notas[nombre] += nota
+            conteo_notas[nombre] += 1
+       else:
+            suma_notas[nombre] = nota
+            conteo_notas[nombre] = 1
+  
+   for nombre in suma_notas :
+         promedio_diccionarios[nombre] = suma_notas [nombre] / conteo_notas[nombre]
+         
+   return promedio_diccionarios
 
+
+
+#EJERCICIO 17
+historiales:dict= {
+   "Juan":Pila(),
+   "Pedro":Pila()
+}
+
+historiales["Juan"].put("youtube.com")
+historiales["Juan"].put("exactascampus.com")
+historiales["Pedro"].put("mercadolibre.com")
    
       
+def visitar_sitio(historiales_dict:dict[str,Pila[str]],usuario:str,sitio:str):
+   if historiales_dict !="" and usuario!= "" and str!="":
+      if usuario in historiales_dict:
+        historiales_dict[usuario].put(sitio)
+      else:
+         historiales[usuario] = Pila()
+         historiales[usuario].put(sitio)
+         
+         
+def navegar_atras(historiales_dict:dict[str,Pila[str]],usuario:str)->str:
+   sitio = ""
+   if usuario in historiales_dict:
+      sitio= historiales_dict[usuario].get()
+        
+   return sitio
+
+         
+#EJERCICIO 18
