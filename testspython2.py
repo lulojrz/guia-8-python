@@ -1,7 +1,7 @@
 from queue import LifoQueue as Pila
 from queue import Queue as Cola
 import unittest
-from python2 import calcular_promedio_por_estudiante,visitar_sitio,navegar_atras,agregar_producto,actualizar_stock,actualizar_precio, calcular_inventario
+from python2 import calcular_promedio_por_estudiante,visitar_sitio,navegar_atras,agregar_producto,actualizar_stock,actualizar_precio, calcular_inventario, contar_lineas,existe_palabra, cantidad_de_apariciones
 
 class tests_promedio(unittest.TestCase):
     def test_parametro_vacio(self):
@@ -187,7 +187,24 @@ class tests_calcular_inventario(unittest.TestCase):
         
         self.assertEqual(calcular_inventario(inventario),170000)
                 
-      
+class tests_contar_lineas(unittest.TestCase):
+    def test_contar_lineas_archivo_existente(self):
+        self.assertEqual(contar_lineas("archivo.txt"),4)    
         
+    def test_contar_lineas_archivo_noexistente(self):
+        self.assertEqual(contar_lineas(""),0)    
+
+  
+class tests_existe_palabra(unittest.TestCase):
+    def test_existe_palabra(self):
+        self.assertTrue(existe_palabra("archivo.txt","me \n"))   
+        
+    def test_no_existe_palabra(self):
+        self.assertFalse(existe_palabra("archivo.txt","a"))
+        
+class test_cant_apariciones(unittest.TestCase):
+    def test_cant_apariciones(self):
+        self.assertEqual(cantidad_de_apariciones("archivo.txt","Hola"),1)
+           
 if __name__ == '__main__':
     unittest.main(verbosity=2)

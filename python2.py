@@ -397,3 +397,44 @@ def calcular_inventario(diccionario:dict[str,dict[Union[int,float]]])-> float:
       cont+=producto["Cantidad"] * producto["Precio"]
       
    return cont
+
+#EJERCICIO 19
+#MANEJO DE ARCHIVOS
+def contar_lineas(archivo:str)->int:
+   cont = 0
+   if archivo :
+      archivo = open(archivo,"r")
+      lista = archivo.readlines()
+      archivo.close()
+      cont = len(lista)
+      
+   return cont
+
+def existe_palabra(archivo:str, palabra:str)->bool:
+   afirmacion = False
+   if archivo :
+      archivo = open(archivo,"r")
+      lista=archivo.readlines()
+      archivo.close()
+      if palabra in lista:
+         afirmacion= True
+         
+   return afirmacion     
+
+def cantidad_de_apariciones(archivo:str,palabra:str)->int:
+   cont = 0
+   if archivo and palabra:
+      archivo=open(archivo,"r")
+      lista = archivo.readlines()
+      archivo.close()
+      for linea in lista:
+         if palabra in linea:
+            cont+=1
+            
+            
+   return cont
+
+
+#EJERCICIO 20
+#EJERCICIO 21
+#EJERCICIO 24
