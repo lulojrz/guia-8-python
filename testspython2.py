@@ -1,7 +1,7 @@
 from queue import LifoQueue as Pila
 from queue import Queue as Cola
 import unittest
-from python2 import calcular_promedio_por_estudiante,visitar_sitio,navegar_atras
+from python2 import calcular_promedio_por_estudiante,visitar_sitio,navegar_atras,agregar_producto,actualizar_stock,actualizar_precio, calcular_inventario
 
 class tests_promedio(unittest.TestCase):
     def test_parametro_vacio(self):
@@ -60,8 +60,133 @@ class test_navegar_para_atras(unittest.TestCase):
         historiales["Pedro"].put("mercadolibre.com")
         self.assertEqual(navegar_atras(historiales,"Sebastian"),"")
         
+ 
+class tests_agregar_producto_inventario(unittest.TestCase):
+    def test_esperado(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        agregar_producto(inventario,"Gorra",35000.00,2)
+        self.assertEqual(inventario["Gorra"],{"Cantidad":2,"Precio":35000.00})
         
-
+    def test_precio_menora0(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        agregar_producto(inventario,"Gorra",-1,2)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+    def test_cantidad_menora0(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        agregar_producto(inventario,"Gorra",35000.00,-1)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+            
+    def test_string_vacio(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        agregar_producto(inventario,"",35000.00,0)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+           
+class tests_actualizar_stock(unittest.TestCase):
+    def test_stock_clave_existente(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_stock(inventario,"Camiseta",35)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":35,"Precio":30000.00}})
+        
+    def test_stock_clave_noexistente(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_stock(inventario,"Remera",35)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+    def test_stock_cantidad_menora0(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_stock(inventario,"Remera",-3)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+    def test_stock_string_vacio(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_stock(inventario,"",35)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+class tests_actualizar_precio(unittest.TestCase):
+    def test_precio_clave_existente(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_precio(inventario,"Camiseta",40000)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":40000.00}})
+        
+    def test_precio_clave_noexistente(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_precio(inventario,"Remera",30.000)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+    def test_precio_cantidad_menora0(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_precio(inventario,"Remera",-3)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+    def test_precio_string_vacio(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000.00
+        }}
+        actualizar_precio(inventario,"",35)
+        self.assertEqual(inventario,{"Camiseta":{"Cantidad":5,"Precio":30000.00}})
+        
+class tests_calcular_inventario(unittest.TestCase):
+    def test_calculo_inventario(self):
+        inventario:dict = {
+       "Camiseta":{
+       "Cantidad":5,
+       "Precio":30000
+        },
+       "Remera":{
+         "Cantidad":2,
+         "Precio":10000
+           }
+       }
+        
+        self.assertEqual(calcular_inventario(inventario),170000)
+                
       
         
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from queue import LifoQueue as Pila
 from queue import Queue as Cola
+from typing import Union
 import random
 #guia 8
 #Pilas
@@ -352,15 +353,7 @@ def calcular_promedio_por_estudiante(notas:tuple[tuple[str,int]]) -> dict[str,fl
 
 
 #EJERCICIO 17
-historiales:dict= {
-   "Juan":Pila(),
-   "Pedro":Pila()
-}
 
-historiales["Juan"].put("youtube.com")
-historiales["Juan"].put("exactascampus.com")
-historiales["Pedro"].put("mercadolibre.com")
-   
       
 def visitar_sitio(historiales_dict:dict[str,Pila[str]],usuario:str,sitio:str):
    if historiales_dict !="" and usuario!= "" and str!="":
@@ -380,3 +373,27 @@ def navegar_atras(historiales_dict:dict[str,Pila[str]],usuario:str)->str:
 
          
 #EJERCICIO 18
+def agregar_producto(diccionario : dict[str, dict[Union[int, float]]],producto:str,precio:float,cantidad:float):
+   if precio>= 0 and cantidad >=0 and producto!="":
+      if producto not in diccionario:
+         diccionario[producto]={
+            "Cantidad":cantidad,
+            "Precio":precio
+         }
+   
+
+def actualizar_stock(diccionario:dict[str,dict[Union[int,float]]],nombre:str,cantidad:float):
+   if cantidad >=0 and nombre!="" and  nombre in diccionario:
+      diccionario[nombre]["Cantidad"]=cantidad
+      
+      
+def actualizar_precio(diccionario:dict[str,dict[Union[int,float]]],nombre:str,precio:float):
+   if precio >=0 and nombre!="" and  nombre in diccionario:
+      diccionario[nombre]["Precio"]= precio
+     
+def calcular_inventario(diccionario:dict[str,dict[Union[int,float]]])-> float:
+   cont = 0
+   for producto in diccionario.values():
+      cont+=producto["Cantidad"] * producto["Precio"]
+      
+   return cont
